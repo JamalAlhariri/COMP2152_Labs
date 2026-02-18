@@ -1,4 +1,3 @@
-# COMP2152\_Labs 
 
 # COMP2152_Labs
 COMP2152 Labs
