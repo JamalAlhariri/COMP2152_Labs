@@ -1,3 +1,0 @@
-
-# COMP2152_Labs
-COMP2152 Labs
