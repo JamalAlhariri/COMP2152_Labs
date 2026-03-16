@@ -1,6 +1,6 @@
 # ============================================================
 #  WEEK 09 LAB — Q1: SYSTEM INFORMATION REPORTER
-#  COMP2152 — [Your Name Here]
+#  COMP2152 — Jamal Alhariri
 # ============================================================
 
 import os
@@ -41,7 +41,11 @@ def get_system_info():
 
 
 def get_python_info():
-    pass
+    return {
+        "version": sys.version,
+        "executable": sys.executable,
+        "platform": sys.platform
+    }
 
 
 # TODO: Complete get_directory_info(path)
@@ -49,7 +53,12 @@ def get_python_info():
 #   Use: os.path.abspath(), os.path.exists(),
 #        os.listdir() (count items), os.path.isdir()
 def get_directory_info(path):
-    pass
+    return {
+        "path": os.path.abspath(path),
+        "exists": os.path.exists(path),
+        "file_count": len(os.listdir(path)) if os.path.exists(path) else 0,
+        "is_directory": os.path.isdir(path)
+    }
 
 
 # --- Main (provided) ---
