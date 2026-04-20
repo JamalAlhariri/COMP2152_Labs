@@ -8,12 +8,12 @@ import urllib.request
 
 # Security headers every website should have
 REQUIRED_HEADERS = {
-    "Content-Type":              "Defines the content format",
-    "X-Frame-Options":           "Vulnerable to clickjacking",
-    "X-Content-Type-Options":    "Vulnerable to MIME sniffing",
+    "Content-Type": "Defines the content format",
+    "X-Frame-Options": "Vulnerable to clickjacking",
+    "X-Content-Type-Options": "Vulnerable to MIME sniffing",
     "Strict-Transport-Security": "No HTTPS enforcement",
-    "Content-Security-Policy":   "No XSS protection policy",
-    "X-XSS-Protection":          "No XSS filter",
+    "Content-Security-Policy": "No XSS protection policy",
+    "X-XSS-Protection": "No XSS filter",
 }
 
 
@@ -24,39 +24,36 @@ def check_headers(url):
         headers = dict(response.headers)
         results = []
 
-        for name in REQUIRED_HEADERS:
-            if name in headers:
+        for header in REQUIRED_HEADERS:
+            if header in headers:
                 results.append({
-                    "header": name,
+                    "header": header,
                     "present": True,
-                    "value": headers[name]
+                    "value": headers[header]
                 })
             else:
                 results.append({
-                    "header": name,
+                    "header": header,
                     "present": False,
                     "value": "MISSING"
                 })
 
         return results
-    except Exception:
+
+    except Exception as e:
+        print(f"  Error: {e}")
         return []
 
 
 # Complete generate_report(url, results)
 def generate_report(url, results):
-    print(f"  URL: {url}")
     missing_count = 0
 
-    for result in results:
-        header = result["header"]
-        present = result["present"]
-        value = result["value"]
-
-        if present:
-            print(f"  ✓ {header}: {value}")
+    for r in results:
+        if r["present"]:
+            print(f"  ✓ {r['header']}: {r['value']}")
         else:
-            print(f"  ✗ {header}: MISSING — {REQUIRED_HEADERS[header]}")
+            print(f"  ✗ {r['header']}: MISSING — {REQUIRED_HEADERS[r['header']]}")
             missing_count += 1
 
     print(f"  Missing {missing_count} of {len(results)} security headers!")
